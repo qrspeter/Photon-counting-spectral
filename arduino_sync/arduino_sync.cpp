@@ -141,7 +141,7 @@ int ARDUINO_SYNC::Open(int port)
 //
 //}
 
-void ARDUINO_SYNC::Laser(laser las) // Возвращает да/нет, в зависимости от состояния подключения.
+void ARDUINO_SYNC::Laser(laser las) // Включает или выключает лазер/светодиод
 {
 	if(las == LASER_ON)
         WriteFile(hSerial, &ON, sizeof(ON), &bc, NULL);

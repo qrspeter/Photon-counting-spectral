@@ -309,8 +309,8 @@ Framework_wx_pureFrame::Framework_wx_pureFrame(wxFrame *frame, const wxString& t
 
     monoComChoice -> SetSelection(monochromator.GetPortNumber() - 1); // default - 3, real - COM4
     monoGrate -> SetSelection(monochromator.GetGrate() - 1);
-    monoWavelengthStart -> SetValue((int)monochromator.GetWavelengthStart()); // заменить на static_cast
-    monoWavelengthStop  -> SetValue((int)monochromator.GetWavelengthStop());    // заменить на static_cast
+    monoWavelengthStart -> SetValue(static_cast<int>(monochromator.GetWavelengthStart())); // заменить на static_cast<int>
+    monoWavelengthStop  -> SetValue(static_cast<int>(monochromator.GetWavelengthStop()));    // заменить на static_cast
     monoWavelengthStep  -> SetValue(monochromator.GetWavelengthStep());
 
 
@@ -766,7 +766,7 @@ void Framework_wx_pureFrame::MonoStart(wxCommandEvent &event)
         scanDirection = -1;
     }
 
-    int elements = 1 + (int) scanDirection * (monochromator.GetWavelengthStop() - monochromator.GetWavelengthStart()) / (double)monochromator.GetWavelengthStep();
+    int elements = 1 + static_cast<int> (scanDirection * (monochromator.GetWavelengthStop() - monochromator.GetWavelengthStart()) / static_cast<double>(monochromator.GetWavelengthStep()));
 
 
     std::vector <int> vAccumulatedCounts(elements, 0);
@@ -815,7 +815,7 @@ void Framework_wx_pureFrame::MonoStart(wxCommandEvent &event)
 //                vAccumulatedCounts[element] = vAccumulatedCounts[element] + Measurement();
 //                vAccumulatedCounts[element] = vAccumulatedCounts[element] + counter.GetCount();
 
-                vAveragedCounts[element] = (int)(vAccumulatedCounts[element] / (cycle + 1));
+                vAveragedCounts[element] = static_cast<int>((vAccumulatedCounts[element] / (cycle + 1)));
 
             }
 
@@ -942,7 +942,8 @@ void Framework_wx_pureFrame::AdjustmentStart(wxCommandEvent &event)
     do
     {
 
-        adjTime = vCount*(double)counter.GetSampleTime()/1000;
+        adjTime = vCount*static_cast<double>(counter.GetSampleTime()/1000);
+//        adjTime = vCount*(double)counter.GetSampleTime()/1000;
        // count
 //        counter.Reset();
 //        counter.Start();
@@ -992,7 +993,8 @@ void Framework_wx_pureFrame::AdjustmentStart(wxCommandEvent &event)
         auto vMinmax = std::minmax_element(vAdjCounts.begin(), vAdjCounts.end(), compLess);
 
 
-        framework_graph->Fit(adjTime - (double)counter.GetSampleTime()*elements/1000, adjTime, *vMinmax.first, *vMinmax.second); //0, 100);
+        framework_graph->Fit(adjTime - static_cast<double>(counter.GetSampleTime()*elements/1000), adjTime, *vMinmax.first, *vMinmax.second); //0, 100);
+//        framework_graph->Fit(adjTime - (double)counter.GetSampleTime()*elements/1000, adjTime, *vMinmax.first, *vMinmax.second); //0, 100);
 
    //     std::pair<double> vMinMax = std::minmax_element(vAdjCounts.begin(), vAdjCounts.end());
 

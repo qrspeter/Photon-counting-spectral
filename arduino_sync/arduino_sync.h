@@ -16,7 +16,7 @@ public:
     int  Open(int);
     void Close();
 
-    void Laser(laser);
+    void Laser(laser); // Включает или выключает лазер/светодиод
     int GetSleeping();
     void SetSleeping(int);
 
