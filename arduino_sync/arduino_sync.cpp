@@ -5,8 +5,6 @@
  */
 
 
-
-
 //#include <iostream>
 //#include <wx/filename.h> // для wxYield
 

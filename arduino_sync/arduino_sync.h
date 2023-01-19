@@ -2,7 +2,6 @@
 #define ARDUINO_SYNC_H_INCLUDED
 
 
-
 enum laser{
     LASER_OFF, LASER_ON};
 
